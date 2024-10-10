@@ -1,3 +1,46 @@
-<?php
-// Use 'totalrepairs' as it's passed in the parameters
-echo "Total repaired orders: " . $totalrepairs;
+<h1><?php echo $title; ?></h1>
+
+<p>Total repaired orders: <?php echo $totalRepairs; ?></p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Repair Order ID</th>
+            <th>Issue Reported</th>
+            <th>Status</th>
+            <th>Customer Name</th>
+            <th>Device</th>
+            <th>Technician</th>
+            <th>Invoice Total</th>
+            <th>Part Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($repairOrders)): ?>
+            <?php foreach ($repairOrders as $order): ?>
+                <tr>
+                    <td><?php echo $order['repairorder_id']; ?></td>
+                    <td><?php echo $order['issueReported']; ?></td>
+                    <td><?php echo $order['status']; ?></td>
+                    <td><?php echo $order['customer_firstname'] . ' ' . $order['customer_lastname']; ?></td>
+                    <td><?php echo $order['device_type'] . ' ' . $order['device_brand'] . ' ' . $order['device_model']; ?></td>
+                    <td><?php echo $order['technician_firstname'] . ' ' . $order['technician_lastname']; ?></td>
+                    <td><?php echo $order['invoice_total']; ?></td>
+                    <td>
+                        <?php if (!empty($order['part_id'])): ?>
+                            Part ID: <?php echo $order['part_id']; ?>, Quantity: <?php echo $order['part_quantity']; ?>, 
+                            Selling Price: <?php echo $order['part_selling_price']; ?>, 
+                            Purchase Price: <?php echo $order['part_purchase_price']; ?>
+                        <?php else: ?>
+                            No parts used
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="8">No repair orders found.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
