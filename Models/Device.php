@@ -4,6 +4,4 @@ namespace App\Models;
 
 use App\Models\BaseModel;
 
-class Technicians extends BaseModel {
-    
-}
+class Device extends BaseModel {}

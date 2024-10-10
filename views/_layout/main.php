@@ -8,21 +8,14 @@
     <link rel="stylesheet" href="/css/main.css?v=<?php if( $_ENV['DEV_MODE'] == "true" ) { echo time(); }; ?>">
 </head>
 <body>
-    <div class="brand">BrandName</div>
-
-    <nav>
-        <a href="/">Home</a>
-        <a href="#">item 2</a>
-        <a href="#">item 3</a>
-        <a href="#">item 4</a>
-    </nav>
+    <div class="brand">Fixit Aalst</div>
 
     <main>
         <?= $content; ?>
     </main>
     
     <footer>
-        &copy; <?= date('Y'); ?> - BrandName
+        &copy; <?= date('2009'); ?> - Fixit Aalst
     </footer>
 </body>
 </html>
