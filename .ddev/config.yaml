@@ -1,4 +1,4 @@
-name: BaseMVC
+name: backoffice
 type: php
 docroot: public
 php_version: "8.2"
@@ -13,6 +13,9 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
+host_webserver_port: "6000"
+host_https_port: "6001"
+host_db_port: "6002"
 
 # Key features of DDEV's config.yaml:
 
