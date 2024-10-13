@@ -16,14 +16,17 @@ class RepairOrder extends BaseModel
         return $pdo_statement->fetchColumn();
     }
 
-    public function updateTotalRepairs()
+    public function updateStatus($repairorder_id)
     {
-        $sql = 'UPDATE repairorders SET status = "completed" WHERE status = "in progress" AND DATE(created_on) < CURDATE()';
+        $sql = 'UPDATE repairorders SET status = "completed" WHERE id = :id AND status = "in progress"';
         $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':id', $repairorder_id);
         $pdo_statement->execute();
 
-        return $pdo_statement->rowCount();
+        return $pdo_statement->rowCount(); // This will return the number of rows affected
     }
+
+
 
 
     public function getAllRepairOrdersWithData()

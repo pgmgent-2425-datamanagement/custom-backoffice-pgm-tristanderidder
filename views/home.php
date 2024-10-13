@@ -37,6 +37,18 @@
                             No parts used
                         <?php endif; ?>
                     </td>
+                    <td>
+                        <?php if ($order['status'] === 'In Progress'): // Only show button for In Progress orders 
+                        ?>
+                            <form action="/updateRepairOrder" method="post">
+                                <input type="hidden" name="repairorder_id" value="<?php echo $order['repairorder_id']; ?>">
+                                <button type="submit">Update</button>
+                            </form>
+
+
+
+                        <?php endif; ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
