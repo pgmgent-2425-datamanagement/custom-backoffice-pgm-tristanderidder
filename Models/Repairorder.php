@@ -7,13 +7,22 @@ use App\Models\BaseModel;
 class RepairOrder extends BaseModel
 {
 
-    public function totalRepairs()
+    public function totalRepairsToday()
     {
-        $sql = 'SELECT COUNT(*) as total FROM repairorders WHERE status = "completed"';
+        $sql = 'SELECT COUNT(*) as total FROM repairorders WHERE status = "completed" AND DATE(created_on) = CURDATE()';
         $pdo_statement = $this->db->prepare($sql);
         $pdo_statement->execute();
 
-        return $pdo_statement->fetchColumn(); // Correctly fetching the total count
+        return $pdo_statement->fetchColumn();
+    }
+
+    public function updateTotalRepairs()
+    {
+        $sql = 'UPDATE repairorders SET status = "completed" WHERE status = "in progress" AND DATE(created_on) < CURDATE()';
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->execute();
+
+        return $pdo_statement->rowCount();
     }
 
 
@@ -32,8 +41,7 @@ class RepairOrder extends BaseModel
                 t.firstname AS technician_firstname,
                 t.lastname AS technician_lastname,
                 i.total AS invoice_total,
-                pr.part_id AS part_id,
-                pr.quantity AS part_quantity,
+                p.name AS part_name,
                 pr.sellingPriceAtRepair AS part_selling_price,
                 pr.purchasePriceAtRepair AS part_purchase_price
             FROM 
@@ -48,6 +56,9 @@ class RepairOrder extends BaseModel
                 invoices i ON ro.id = i.repairorder
             LEFT JOIN 
                 parts_repairorders pr ON ro.id = pr.repairorder_id
+            LEFT JOIN 
+                parts p ON pr.part_id = p.id
+            WHERE DATE(ro.created_on) = CURDATE();
         ";
 
         $pdo_statement = $this->db->prepare($sql);

@@ -1,6 +1,8 @@
 <h1><?php echo $title; ?></h1>
 
-<p>Total repaired orders: <?php echo $totalRepairs; ?></p>
+<p>Total invoices today: <?php echo $totalInvoices; ?></p>
+
+<p>Total repairs today: <?php echo $totalRepairsToday; ?></p>
 
 <table>
     <thead>
@@ -9,6 +11,7 @@
             <th>Issue Reported</th>
             <th>Status</th>
             <th>Customer Name</th>
+            <th>Device type</th>
             <th>Device</th>
             <th>Technician</th>
             <th>Invoice Total</th>
@@ -23,14 +26,13 @@
                     <td><?php echo $order['issueReported']; ?></td>
                     <td><?php echo $order['status']; ?></td>
                     <td><?php echo $order['customer_firstname'] . ' ' . $order['customer_lastname']; ?></td>
-                    <td><?php echo $order['device_type'] . ' ' . $order['device_brand'] . ' ' . $order['device_model']; ?></td>
+                    <td><?php echo $order['device_type'] ?></td>
+                    <td><?php echo $order['device_brand'] . ' ' . $order['device_model']; ?></td>
                     <td><?php echo $order['technician_firstname'] . ' ' . $order['technician_lastname']; ?></td>
                     <td><?php echo $order['invoice_total']; ?></td>
                     <td>
-                        <?php if (!empty($order['part_id'])): ?>
-                            Part ID: <?php echo $order['part_id']; ?>, Quantity: <?php echo $order['part_quantity']; ?>, 
-                            Selling Price: <?php echo $order['part_selling_price']; ?>, 
-                            Purchase Price: <?php echo $order['part_purchase_price']; ?>
+                        <?php if (!empty($order['part_name'])): ?>
+                            Part ID: <?php echo $order['part_name']; ?>
                         <?php else: ?>
                             No parts used
                         <?php endif; ?>
