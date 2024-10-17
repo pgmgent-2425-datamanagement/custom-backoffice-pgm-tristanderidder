@@ -7,6 +7,7 @@ use App\Models\Technician;
 use App\Models\RepairOrder;
 use App\Models\Device;
 use App\Models\Invoice;
+use App\Models\Part;
 
 class addRepairController extends BaseController
 {
@@ -18,10 +19,14 @@ class addRepairController extends BaseController
         $device = new Device();
         $devices = $device->getAllDevices();
 
+        $parts = new Part();
+        $parts = $parts->getAllParts();
+
         self::loadView('/addRepair', [
             'title' => 'Add Repair',
             'technicians' => $technicians,
-            'devices' => $devices
+            'devices' => $devices,
+            'parts' => $parts
         ]);
     }
 
@@ -49,11 +54,14 @@ class addRepairController extends BaseController
             $repairOrderModel = new RepairOrder();
             $repairorder_id = $repairOrderModel->addRepair($customer_id, $device, $status, $issue, $technician_id, $created_on);
 
-            // Collect price for the invoice
-            $price = $_POST['price'];
-
             // Add the invoice, ensuring the repairorder_id is passed
             $invoiceModel = new Invoice();
+
+            // Collect price for the invoice
+            $brand = $_POST['brand'];
+            $model = $_POST['model'];
+            $price = $_POST['price'];
+
             $invoice_id = $invoiceModel->addInvoice($price, $repairorder_id); // Pass price and repairorder_id
 
             header('Location: /');
