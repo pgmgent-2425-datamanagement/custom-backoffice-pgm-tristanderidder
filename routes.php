@@ -1,8 +1,11 @@
 <?php
 
-//$router->get('/', function() { echo 'Dit is de index vanuit de route'; });
+//GET Requests
 $router->setNamespace('\App\Controllers');
 $router->get('/', 'HomeController@index');
+$router->get('/addRepair', 'addRepairController@index');
 
-// Define the route for updating a repair order (POST request)
+
+//POST Requests
 $router->post('/updateRepairOrder', 'HomeController@updateRepairOrder');
+$router->post('/addRepair', 'addRepairController@addRepair');

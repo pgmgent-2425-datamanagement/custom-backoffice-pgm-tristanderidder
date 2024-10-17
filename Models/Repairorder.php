@@ -23,9 +23,26 @@ class RepairOrder extends BaseModel
         $pdo_statement->bindParam(':id', $repairorder_id);
         $pdo_statement->execute();
 
-        return $pdo_statement->rowCount(); // This will return the number of rows affected
+        return $pdo_statement->rowCount();
     }
 
+    public function addRepair($customer_id, $device_id, $status, $problem, $technician_id, $created_on)
+    {
+        $sql = "
+    INSERT INTO repairorders (customer_id, device_id, status, issueReported, technician_id, created_on) 
+    VALUES (:customer_id, :device_id, :status, :problem, :technician_id, :created_on)
+    ";
+        $statement = $this->db->prepare($sql);
+        $statement->bindParam(':customer_id', $customer_id);
+        $statement->bindParam(':device_id', $device_id);
+        $statement->bindParam(':status', $status);
+        $statement->bindParam(':problem', $problem);
+        $statement->bindParam(':technician_id', $technician_id);
+        $statement->bindParam(':created_on', $created_on);
+        $statement->execute();
+
+        return $repairorder_id = $this->db->lastInsertId();
+    }
 
 
 
@@ -56,7 +73,7 @@ class RepairOrder extends BaseModel
             LEFT JOIN 
                 technicians t ON ro.technician_id = t.id
             LEFT JOIN 
-                invoices i ON ro.id = i.repairorder
+                invoices i ON ro.id = i.repairorder_id
             LEFT JOIN 
                 parts_repairorders pr ON ro.id = pr.repairorder_id
             LEFT JOIN 
