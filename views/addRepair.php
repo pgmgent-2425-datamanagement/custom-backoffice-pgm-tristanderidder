@@ -61,18 +61,17 @@
             <span>Parts</span>
             <div id="parts-container">
                 <p>Please select a brand and model to view parts.</p>
-                <!-- Parts will be populated here based on selections -->
                 <?php foreach ($parts as $part): ?>
                     <div class="part-option" data-model-id="<?= $part['device_id']; ?>">
-                        <input type="checkbox" name="parts[]" value="<?= $part['id']; ?>"> <?= $part['name']; ?>
-                        <span>€<?= $part['sellingPrice']?></span>
+                        <input type="checkbox" name="parts[]" value="<?= $part['id']; ?>" class="part-checkbox" data-price="<?= $part['sellingPrice']; ?>"> <?= $part['name']; ?>
+                        <span>€<?= $part['sellingPrice']; ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
         </label>
         <label>
             <span>Price</span>
-            <input type="text" name="price" required>
+            <input type="text" name="price" id="price-input" required readonly>
         </label>
     </fieldset>
     <button type="submit" value="Save">Add repair</button>
@@ -141,4 +140,25 @@
 
     // Initialize for device section
     setupBrandModelSelection('brand-select-device', 'model-select-device', 'model-option', 'parts-container');
+
+    // Function to update total price based on selected parts
+    function updateTotalPrice() {
+        const checkboxes = document.querySelectorAll('.part-checkbox');
+        let totalPrice = 0;
+
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                totalPrice += parseFloat(checkbox.getAttribute('data-price'));
+            }
+        });
+
+        // Update the price input field with the total price
+        document.getElementById('price-input').value = totalPrice.toFixed(2); // Format to 2 decimal places
+    }
+
+    // Add event listeners to checkboxes to update the total price on change
+    const partCheckboxes = document.querySelectorAll('.part-checkbox');
+    partCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateTotalPrice);
+    });
 </script>

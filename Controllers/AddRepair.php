@@ -58,8 +58,7 @@ class addRepairController extends BaseController
             $invoiceModel = new Invoice();
 
             // Collect price for the invoice
-            $brand = $_POST['brand'];
-            $model = $_POST['model'];
+            $device_id = $_POST['model'];
             $price = $_POST['price'];
 
             $invoice_id = $invoiceModel->addInvoice($price, $repairorder_id); // Pass price and repairorder_id
