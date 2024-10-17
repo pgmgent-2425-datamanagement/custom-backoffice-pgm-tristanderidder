@@ -8,6 +8,7 @@ use App\Models\RepairOrder;
 use App\Models\Device;
 use App\Models\Invoice;
 use App\Models\Part;
+use App\Models\Parts_Repairorder;
 
 class addRepairController extends BaseController
 {
@@ -33,7 +34,6 @@ class addRepairController extends BaseController
     public static function addRepair()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             // Collect customer data
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
@@ -58,15 +58,24 @@ class addRepairController extends BaseController
             $invoiceModel = new Invoice();
 
             // Collect price for the invoice
-            $device_id = $_POST['model'];
             $price = $_POST['price'];
-
             $invoice_id = $invoiceModel->addInvoice($price, $repairorder_id); // Pass price and repairorder_id
+
+            // Insert the selected parts into parts_repairorders
+            if (isset($_POST['parts']) && !empty($_POST['parts'])) {
+                $quantity = '1'; 
+                $partRepairOrderModel = new Parts_Repairorder(); // Ensure you have this model instantiated
+
+                foreach ($_POST['parts'] as $partId) {
+                    $partRepairOrderModel->addPartsRepairorder($partId, $repairorder_id, $quantity);
+                }
+            }
 
             header('Location: /');
             exit();
         }
     }
+
 
 
 }

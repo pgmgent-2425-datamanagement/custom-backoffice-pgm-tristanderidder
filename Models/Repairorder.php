@@ -54,8 +54,6 @@ class RepairOrder extends BaseModel
         return $repairorder_id = $this->db->lastInsertId();
     }
 
-
-
     public function getAllRepairOrdersWithDataDaily()
     {
         $sql = "
@@ -71,9 +69,7 @@ class RepairOrder extends BaseModel
                 t.firstname AS technician_firstname,
                 t.lastname AS technician_lastname,
                 i.total AS invoice_total,
-                p.name AS part_name,
-                pr.sellingPriceAtRepair AS part_selling_price,
-                pr.purchasePriceAtRepair AS part_purchase_price
+                p.name AS part_name
             FROM 
                 repairorders ro
             LEFT JOIN 

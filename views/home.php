@@ -7,7 +7,6 @@
 <table>
     <thead>
         <tr>
-            <th>Repair Order ID</th>
             <th>Issue Reported</th>
             <th>Status</th>
             <th>Customer Name</th>
@@ -22,7 +21,6 @@
         <?php if (!empty($repairOrders)): ?>
             <?php foreach ($repairOrders as $order): ?>
                 <tr>
-                    <td><?php echo $order['repairorder_id']; ?></td>
                     <td><?php echo $order['issueReported']; ?></td>
                     <td><?php echo $order['status']; ?></td>
                     <td><?php echo $order['customer_firstname'] . ' ' . $order['customer_lastname']; ?></td>
@@ -42,7 +40,7 @@
                         ?>
                             <form action="/updateRepairOrder" method="post">
                                 <input type="hidden" name="repairorder_id" value="<?php echo $order['repairorder_id']; ?>">
-                                <button type="submit">Update</button>
+                                <button type="submit">Completed</button>
                             </form>
                         <?php endif; ?>
                     </td>
