@@ -69,4 +69,38 @@ class HomeController extends BaseController
             exit();
         }
     }
+    public static function deleteRepairOrder()
+    {
+        // Check if the request method is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if the repairorder_id exists in POST data
+            if (isset($_POST['repairorder_id'])) {
+                $repairorder_id = $_POST['repairorder_id'];
+
+                // Assume we have the RepairOrder model available
+                $repairOrderModel = new RepairOrder();
+
+                // Call the update method
+                $updated = $repairOrderModel->updateStatus($repairorder_id);
+
+                if ($updated) {
+                    // Redirect back with a success status
+                    header('Location: /?status=updated');
+                    exit();
+                } else {
+                    // Handle the error case
+                    header('Location: /?status=error');
+                    exit();
+                }
+            } else {
+                // Handle case where repairorder_id is not set
+                header('Location: /?status=error');
+                exit();
+            }
+        } else {
+            // If not a POST request, redirect or handle appropriately
+            header('Location: /');
+            exit();
+        }
+    }
 }

@@ -26,6 +26,16 @@ class RepairOrder extends BaseModel
         return $pdo_statement->rowCount();
     }
 
+    public function deleteRepair($repairorder_id)
+    {
+        $sql = "DELETE FROM repairorders WHERE id = :id";
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':id', $repairorder_id);
+        $pdo_statement->execute();
+
+        return $pdo_statement->rowCount();
+    }
+
     public function addRepair($customer_id, $device_id, $status, $problem, $technician_id, $created_on)
     {
         $sql = "
@@ -86,7 +96,7 @@ class RepairOrder extends BaseModel
 
         return $pdo_statement->fetchAll(\PDO::FETCH_ASSOC);
     }
-    public function getAllRepairOrdersWithDataMontly($month)
+    public function getAllRepairOrdersWithDataMonthly($month)
     {
         $sql = "
         SELECT 

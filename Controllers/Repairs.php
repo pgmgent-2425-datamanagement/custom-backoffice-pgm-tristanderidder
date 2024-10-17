@@ -13,7 +13,7 @@ class RepairsController extends BaseController
         $repairOrderModel = new RepairOrder();
 
         // Get all repair orders with details
-        $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataMontly($month);
+        $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataMonthly($month);
 
         self::loadView('/repairs', [
             'title' => 'Repairs',

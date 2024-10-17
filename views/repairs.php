@@ -53,6 +53,12 @@
 
                         <?php endif; ?>
                     </td>
+                    <td>
+                        <form action="/deleteRepairOrder" method="post">
+                            <input type="hidden" name="repairorder_id" value="<?php echo $order['repairorder_id']; ?>">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
