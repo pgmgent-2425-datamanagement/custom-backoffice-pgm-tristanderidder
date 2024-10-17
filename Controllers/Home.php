@@ -16,7 +16,7 @@ class HomeController extends BaseController
         $totalRepairsToday = $repairOrderModel->totalRepairsToday();
 
         // Get all repair orders with details
-        $repairOrders = $repairOrderModel->getAllRepairOrdersWithData();
+        $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataDaily();
 
         // Get All Invoices
         $totalInvoices = $invoiceModel->totalInvoices();
