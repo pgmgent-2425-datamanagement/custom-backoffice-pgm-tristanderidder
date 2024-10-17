@@ -4,7 +4,6 @@ namespace App\Models;
 
 class Part extends BaseModel
 {
-
     public function getAllParts()
     {
         $sql = 'SELECT * FROM parts';
@@ -43,6 +42,16 @@ class Part extends BaseModel
         return $pdo_statement->execute();
     }
 
+    public function deletePart($id)
+    {
+        $sql = "DELETE FROM parts WHERE id = :id";
+
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':id', $id);
+
+        // Execute the statement and check for errors
+        return $pdo_statement->execute();
+    }
 
     public function addPart($name, $device_id, $purchasePrice, $sellingPrice)
     {
@@ -66,6 +75,4 @@ class Part extends BaseModel
             return false;
         }
     }
-
 }
-

@@ -20,6 +20,10 @@
                     <td>
                         <button class="edit-btn" data-id="<?php echo $part['id']; ?>">Edit</button>
                         <button class="update-btn" data-id="<?php echo $part['id']; ?>" style="display: none;">Update</button>
+                        <form method="POST" action="/deletePart" style="display: inline;">
+                            <input type="hidden" name="id" value="<?php echo $part['id']; ?>">
+                            <button type="submit" onclick="return confirm('Are you sure you want to delete this part?');">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 <tr id="edit-row-<?php echo $part['id']; ?>" style="display: none;">

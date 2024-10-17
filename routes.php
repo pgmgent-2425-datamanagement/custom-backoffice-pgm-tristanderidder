@@ -14,4 +14,5 @@ $router->post('/deleteRepairOrder', 'HomeController@deleteRepairOrder');
 $router->post('/addRepair', 'addRepairController@addRepair');
 $router->post('/addPart', 'addPartsController@addPart');
 $router->post('/updatePart', 'PartsController@updatePart');
+$router->post('/deletePart', 'PartsController@deletePart');
 

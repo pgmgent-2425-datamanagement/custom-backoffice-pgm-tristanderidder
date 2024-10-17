@@ -17,19 +17,6 @@ class PartsController extends BaseController
         ]);
     }
 
-    // Show the update form with the part's current data
-    public static function updatePartForm()
-    {
-        $partId = $_GET['id'];
-        $part = new Part();
-        $partData = $part->getPartById($partId);
-
-        self::loadView('/updatePart', [
-            'title' => 'Update Part',
-            'part' => $partData
-        ]);
-    }
-
     // Handle the part update logic
     public static function updatePart()
     {
@@ -42,13 +29,26 @@ class PartsController extends BaseController
 
             // Create an instance of the Part model and update the part
             $part = new Part();
-            $part->updatePart($partId, $name,
-                $purchasePrice,
-                $sellingPrice
-            );
+            $part->updatePart($partId, $name, $purchasePrice, $sellingPrice);
 
             // Optionally redirect back to the same page or reload the parts
             header('Location: /parts'); // This will refresh the parts page with updated data
+            exit();
+        }
+    }
+
+    // Handle the part deletion logic
+    public static function deletePart()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $partId = $_POST['id'];
+
+            // Create an instance of the Part model and delete the part
+            $part = new Part();
+            $part->deletePart($partId);
+
+            // Optionally redirect back to the parts page
+            header('Location: /parts'); // This will refresh the parts page
             exit();
         }
     }
