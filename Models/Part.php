@@ -2,17 +2,47 @@
 
 namespace App\Models;
 
-use App\Models\BaseModel;
+class Part extends BaseModel
+{
 
-class Part extends BaseModel {
-
-    public function getAllParts() {
+    public function getAllParts()
+    {
         $sql = 'SELECT * FROM parts';
         $pdo_statement = $this->db->prepare($sql);
         $pdo_statement->execute();
 
         return $pdo_statement->fetchAll();
     }
+
+    public function getPartById($id)
+    {
+        $sql = 'SELECT * FROM parts WHERE id = :id';
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':id', $id);
+        $pdo_statement->execute();
+
+        return $pdo_statement->fetch();
+    }
+
+    public function updatePart($id, $name, $purchasePrice, $sellingPrice)
+    {
+        $sql = "
+        UPDATE parts 
+        SET name = :name, purchasePrice = :purchasePrice, sellingPrice = :sellingPrice 
+        WHERE id = :id
+    ";
+
+        $pdo_statement = $this->db->prepare($sql);
+
+        $pdo_statement->bindParam(':name', $name);
+        $pdo_statement->bindParam(':purchasePrice', $purchasePrice);
+        $pdo_statement->bindParam(':sellingPrice', $sellingPrice);
+        $pdo_statement->bindParam(':id', $id);
+
+        // Execute the statement and check for errors
+        return $pdo_statement->execute();
+    }
+
 
     public function addPart($name, $device_id, $purchasePrice, $sellingPrice)
     {
