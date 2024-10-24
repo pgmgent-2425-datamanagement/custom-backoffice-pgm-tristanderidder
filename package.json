@@ -1,5 +1,16 @@
 {
-  "dependencies": {
-    "chart.js": "^4.4.5"
-  }
+  "name": "custom-backoffice-pgm-tristanderidder",
+  "version": "1.0.0",
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/RN63TLFQ) # Base MVC",
+  "main": "tailwind.config.js",
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "tailwindcss": "^3.4.14"
+  },
+  "scripts": {
+    "tailwind:watch": "npx nodemon -e php --exec \"npx tailwindcss -i ./public/css/main.css -o ./public/css/output.css \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

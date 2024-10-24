@@ -1,4 +1,4 @@
-<h1><?php echo $title; ?></h1>
+<h1 class="text-3xl font-bold underline"><?php echo $title; ?></h1>
 
 <p>Total invoices today: <?php echo $totalInvoices; ?></p>
 <canvas id="repairsChart" width="400" height="200"></canvas>
