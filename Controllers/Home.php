@@ -12,7 +12,10 @@ class HomeController extends BaseController
         $repairOrderModel = new RepairOrder();
         $invoiceModel = new Invoice();
 
-        // Get total number of completed repairs
+        // Get total number of completed repairs today
+        $totalCompletedRepairsToday = $repairOrderModel->getCompletedRepairsToday();
+
+        // Get total number of repairs today
         $totalRepairsToday = $repairOrderModel->totalRepairsToday();
 
         // Get all repair orders with details
@@ -21,14 +24,11 @@ class HomeController extends BaseController
         // Get All Invoices
         $totalInvoices = $invoiceModel->totalInvoices();
 
-        // Check if repairs exist
-        error_log("Total Repairs: " . $totalRepairsToday);
-        error_log("Repair Orders Count: " . count($repairOrders));
-        error_log('Total Invoices: ' . $totalInvoices);
-
+        // Pass data to the view
         self::loadView('/home', [
             'title' => 'Dashboard',
-            'totalRepairsToday' => $totalRepairsToday,
+            'totalCompletedRepairsToday' => $totalCompletedRepairsToday,  // Completed repairs for today
+            'totalRepairsToday' => $totalRepairsToday,  // All repairs for today
             'repairOrders' => $repairOrders,
             'totalInvoices' => $totalInvoices,
             'updateStatus' => isset($_GET['status']) ? $_GET['status'] : null

@@ -1,6 +1,8 @@
 <h1><?php echo $title; ?></h1>
 
 <p>Total invoices today: <?php echo $totalInvoices; ?></p>
+<canvas id="repairsChart" width="400" height="200"></canvas>
+
 
 <p>Total repairs today: <?php echo $totalRepairsToday; ?></p>
 
@@ -59,3 +61,42 @@
         <?php endif; ?>
     </tbody>
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    // When the page loads, create the doughnut chart
+    document.addEventListener('DOMContentLoaded', function() {
+        // PHP-generated data
+        const totalRepairsToday = <?php echo $totalInvoices; ?>;
+        const completedRepairsToday = <?php echo $totalCompletedRepairsToday; ?>;
+
+        // Remaining repairs (Total - Completed)
+        const remainingRepairs = totalRepairsToday - completedRepairsToday;
+
+        // Create the chart
+        const ctx = document.getElementById('repairsChart').getContext('2d');
+        const repairsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed Repairs', 'Remaining Repairs'],
+                datasets: [{
+                    data: [completedRepairsToday, remainingRepairs], // Completed and remaining repairs
+                    backgroundColor: ['#4caf50', '#f44336'], // Green for completed, red for remaining
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: `Repairs Overview for Today`
+                    }
+                }
+            }
+        });
+    });
+</script>

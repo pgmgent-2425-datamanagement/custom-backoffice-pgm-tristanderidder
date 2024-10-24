@@ -7,6 +7,8 @@
     </label>
 </form>
 
+<canvas id="repairsChart" width="400" height="200"></canvas>
+
 
 <table>
     <thead>
@@ -65,5 +67,61 @@
 
         // Reload the page with the month value
         window.location.href = '/repairs?month=' + month;
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    // Automatically detect the current month and year
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // JavaScript months are 0-indexed, so we add 1
+        const currentYear = currentDate.getFullYear();
+
+        // Format the month to always be two digits (e.g., '04' for April)
+        const formattedMonth = currentMonth < 10 ? '0' + currentMonth : currentMonth;
+        const formattedDate = `${currentYear}-${formattedMonth}`; // Format: 'YYYY-MM'
+
+        // PHP-generated repair data for the current month
+        const repairsData = <?php echo json_encode($repairDataForMonth); ?>;
+
+        // Prepare chart data
+        const days = [];
+        const repairCounts = [];
+
+        // Assuming `repairsData` is an object where keys are day numbers, and values are repair counts
+        for (let i = 1; i <= 31; i++) {
+            days.push(i);
+            repairCounts.push(repairsData[i] || 0); // Use 0 if no repairs for that day
+        }
+
+        // Create the chart
+        const ctx = document.getElementById('repairsChart').getContext('2d');
+        const repairsChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: days, // Days of the month
+                datasets: [{
+                    label: `Repairs for ${formattedDate}`,
+                    data: repairCounts, // Repair counts per day
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Day of the Month'
+                        }
+                    }
+                }
+            }
+        });
     });
 </script>

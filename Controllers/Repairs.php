@@ -15,9 +15,14 @@ class RepairsController extends BaseController
         // Get all repair orders with details
         $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataMonthly($month);
 
+        // Get the current month for chart data
+        $currentMonth = date('Y-m');  // Format 'YYYY-MM'
+        $repairDataForMonth = $repairOrderModel->getRepairsForMonth($currentMonth);
+
         self::loadView('/repairs', [
             'title' => 'Repairs',
             'repairOrders' => $repairOrders,
+            'repairDataForMonth' => $repairDataForMonth,  // Data for the chart
         ]);
     }
 }

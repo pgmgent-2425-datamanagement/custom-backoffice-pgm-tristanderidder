@@ -134,5 +134,30 @@ class RepairOrder extends BaseModel
 
         return $pdo_statement->fetchAll(\PDO::FETCH_ASSOC);
     }
-    
+
+    public function getRepairsForMonth($month)
+    {
+        $sql = 'SELECT DAY(created_on) as day, COUNT(*) as repair_count 
+            FROM repairorders 
+            WHERE created_on LIKE :month 
+            GROUP BY DAY(created_on)';
+
+        $monthLike = $month . '%'; // Example: '2024-10%'
+
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':month', $monthLike);
+        $pdo_statement->execute();
+
+        // Fetch results as an associative array
+        return $pdo_statement->fetchAll(\PDO::FETCH_KEY_PAIR);
+    }
+
+    public function getCompletedRepairsToday()
+    {
+        $sql = 'SELECT COUNT(*) as total FROM repairorders WHERE status = "completed" AND DATE(created_on) = CURDATE()';
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->execute();
+
+        return $pdo_statement->fetchColumn();
+    }
 }
