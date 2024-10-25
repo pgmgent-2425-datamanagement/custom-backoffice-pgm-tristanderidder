@@ -1,35 +1,45 @@
-<h1><?php echo $title; ?></h1>
+<h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-6 tracking-tight text-center md:text-left">
+    <?php echo $title; ?>
+</h1>
 
-<form method="POST">
-    <label>
-        <span>Part Name</span>
-        <input type="text" name="name" required>
+<form method="POST" class="bg-white p-6 rounded-xl shadow-md space-y-6 max-w-lg mx-auto">
+    <!-- Part Name -->
+    <label class="block">
+        <span class="text-gray-700 font-semibold">Part Name</span>
+        <input type="text" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
     </label>
 
-    <label>
-        <span>Purchase Price</span>
-        <input type="number" name="purchase_price" required>
+    <!-- Purchase Price -->
+    <label class="block">
+        <span class="text-gray-700 font-semibold">Purchase Price</span>
+        <input type="number" name="purchase_price" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
     </label>
 
-    <label>
-        <span>Selling Price</span>
-        <input type="number" name="selling_price" required>
+    <!-- Selling Price -->
+    <label class="block">
+        <span class="text-gray-700 font-semibold">Selling Price</span>
+        <input type="number" name="selling_price" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
     </label>
 
-    <fieldset>
-        <legend>Device</legend>
-        <label>
-            <span>Brand</span>
-            <select id="brand-select-device" name="brand" required>
+    <!-- Device Section -->
+    <fieldset class="border border-gray-200 rounded-xl p-4">
+        <legend class="text-lg font-semibold text-gray-700">Device</legend>
+
+        <!-- Brand Select -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Brand</span>
+            <select id="brand-select-device" name="brand" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Select a brand</option>
                 <?php foreach ($devices as $device): ?>
                     <option value="<?php echo $device['brand']; ?>"><?php echo $device['brand']; ?></option>
                 <?php endforeach; ?>
             </select>
         </label>
-        <label>
-            <span>Model</span>
-            <select name="model" id="model-select-device" required disabled>
+
+        <!-- Model Select -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Model</span>
+            <select name="model" id="model-select-device" required disabled class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Select a model</option>
                 <?php foreach ($devices as $device): ?>
                     <option class="model-option" name="device" value="<?= $device['id']; ?>" data-brand="<?= $device['brand']; ?>"><?= $device['model']; ?></option>
@@ -37,7 +47,11 @@
             </select>
         </label>
     </fieldset>
-    <button type="submit">Add Part</button>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-3 transition">
+        Add Part
+    </button>
 </form>
 
 <script type="text/javascript">
@@ -47,55 +61,19 @@
         const modelSelect = document.querySelector(`#${modelSelectId}`);
         const partsContainer = document.getElementById(partsContainerId);
 
-        // Hide all parts initially
-        const partOptions = document.querySelectorAll('.part-option');
-        partOptions.forEach(part => part.style.display = 'none'); // Hide all parts on load
-
-        // On change of brand select, enable the model select and filter the models based on the selected brand
         brandSelect.addEventListener('change', function() {
             const selectedBrand = this.value;
-            console.log('Selected Brand:', selectedBrand);
-
-            modelSelect.disabled = false; // Enable model select
-
+            modelSelect.disabled = false;
             modelOptions.forEach(option => {
-                if (option.dataset.brand === selectedBrand) {
-                    option.style.display = 'block'; // Show matching models
-                } else {
-                    option.style.display = 'none'; // Hide non-matching models
-                }
-            });});
+                option.style.display = option.dataset.brand === selectedBrand ? 'block' : 'none';
+            });
+        });
 
-        // On change of model select, filter parts based on the selected model
         modelSelect.addEventListener('change', function() {
-            const selectedModelId = this.value; // Get the selected model ID
-
-            // Clear parts container before displaying new parts
-            partsContainer.innerHTML = '<p>Please select a brand and model to view parts.</p>'; // Reset message
-
-            // Show parts only if a model is selected
-            if (selectedModelId) {
-                let hasParts = false;
-
-                partOptions.forEach(part => {
-                    // Use the model ID to match against the selected model
-                    if (part.dataset.modelId == selectedModelId) { // Use == for string comparison
-                        part.style.display = 'block'; // Show matching part
-                        partsContainer.appendChild(part); // Append the visible part
-                        hasParts = true; // Indicate that we found at least one part
-                    }
-                });
-
-                // If no parts found, display message
-                if (!hasParts) {
-                    partsContainer.innerHTML = '<p>No parts available for the selected model.</p>';
-                }
-
-                console.log('Selected Model ID:', selectedModelId);
-            }
+            const selectedModelId = this.value;
+            partsContainer.innerHTML = selectedModelId ? '<p>No parts available for the selected model.</p>' : '<p>Please select a brand and model to view parts.</p>';
         });
     }
 
-    // Initialize for device section
     setupBrandModelSelection('brand-select-device', 'model-select-device', 'model-option', 'parts-container');
 </script>

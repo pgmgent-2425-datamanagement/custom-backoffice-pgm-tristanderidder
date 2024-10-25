@@ -24,11 +24,17 @@ class HomeController extends BaseController
         // Get All Invoices
         $totalInvoices = $invoiceModel->totalInvoices();
 
+        // Get the current month for chart data
+        $currentMonth = date('Y-m');  // Format 'YYYY-MM'
+        $repairDataForMonth = $repairOrderModel->getRepairsForMonth($currentMonth);
+
+
         // Pass data to the view
         self::loadView('/home', [
             'title' => 'Dashboard',
             'totalCompletedRepairsToday' => $totalCompletedRepairsToday,  // Completed repairs for today
             'totalRepairsToday' => $totalRepairsToday,  // All repairs for today
+            'repairDataForMonth' => $repairDataForMonth,  // Data for the chart
             'repairOrders' => $repairOrders,
             'totalInvoices' => $totalInvoices,
             'updateStatus' => isset($_GET['status']) ? $_GET['status'] : null

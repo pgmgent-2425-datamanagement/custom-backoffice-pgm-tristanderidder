@@ -1,36 +1,50 @@
-<h1><?php echo $title; ?></h1>
+<h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-6 tracking-tight text-center md:text-left">
+    <?php echo $title; ?>
+</h1>
 
-<form method="POST">
-    <fieldset>
-        <legend>Customer</legend>
-        <label>
-            <span>Firstname</span>
-            <input type="text" name="firstname" required>
+<form method="POST" class="bg-white p-6 rounded-xl shadow-md space-y-6 max-w-3xl mx-auto">
+    <!-- Customer Section -->
+    <fieldset class="border border-gray-200 rounded-xl p-4">
+        <legend class="text-lg font-semibold text-gray-700">Customer</legend>
+
+        <!-- Firstname -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Firstname</span>
+            <input type="text" name="firstname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </label>
-        <label>
-            <span>Lastname</span>
-            <input type="text" name="lastname" required>
+
+        <!-- Lastname -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Lastname</span>
+            <input type="text" name="lastname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </label>
-        <label>
-            <span>Phone number</span>
-            <input type="text" name="phone" required>
+
+        <!-- Phone Number -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Phone number</span>
+            <input type="text" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </label>
     </fieldset>
 
-    <fieldset>
-        <legend>Device</legend>
-        <label>
-            <span>Brand</span>
-            <select id="brand-select-device" name="brand" required>
+    <!-- Device Section -->
+    <fieldset class="border border-gray-200 rounded-xl p-4">
+        <legend class="text-lg font-semibold text-gray-700">Device</legend>
+
+        <!-- Brand Select -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Brand</span>
+            <select id="brand-select-device" name="brand" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Select a brand</option>
                 <?php foreach ($devices as $device): ?>
                     <option value="<?php echo $device['brand']; ?>"><?php echo $device['brand']; ?></option>
                 <?php endforeach; ?>
             </select>
         </label>
-        <label>
-            <span>Model</span>
-            <select name="model" id="model-select-device" required disabled>
+
+        <!-- Model Select -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Model</span>
+            <select name="model" id="model-select-device" required disabled class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <option value="">Select a model</option>
                 <?php foreach ($devices as $device): ?>
                     <option class="model-option" name="device" value="<?= $device['id']; ?>" data-brand="<?= $device['brand']; ?>"><?= $device['model']; ?></option>
@@ -39,15 +53,20 @@
         </label>
     </fieldset>
 
-    <fieldset>
-        <legend>Repair</legend>
-        <label>
-            <span>Problem</span>
-            <textarea name="problem" required></textarea>
+    <!-- Repair Section -->
+    <fieldset class="border border-gray-200 rounded-xl p-4">
+        <legend class="text-lg font-semibold text-gray-700">Repair</legend>
+
+        <!-- Problem -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Problem</span>
+            <textarea name="problem" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
         </label>
-        <label>
-            <span>Technician</span>
-            <select name="technician">
+
+        <!-- Technician Select -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Technician</span>
+            <select name="technician" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 <?php foreach ($technicians as $technician): ?>
                     <option value="<?php echo $technician['id']; ?>"><?php echo $technician['firstname'] . ' ' . $technician['lastname']; ?></option>
                 <?php endforeach; ?>
@@ -55,11 +74,14 @@
         </label>
     </fieldset>
 
-    <fieldset>
-        <legend>Invoice</legend>
-        <label>
-            <span>Parts</span>
-            <div id="parts-container">
+    <!-- Invoice Section -->
+    <fieldset class="border border-gray-200 rounded-xl p-4">
+        <legend class="text-lg font-semibold text-gray-700">Invoice</legend>
+
+        <!-- Parts List -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Parts</span>
+            <div id="parts-container" class="mt-2">
                 <p>Please select a brand and model to view parts.</p>
                 <?php foreach ($parts as $part): ?>
                     <div class="part-option" data-model-id="<?= $part['device_id']; ?>">
@@ -69,12 +91,18 @@
                 <?php endforeach; ?>
             </div>
         </label>
-        <label>
-            <span>Price</span>
-            <input type="text" name="price" id="price-input" required readonly>
+
+        <!-- Price Input -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Price</span>
+            <input type="text" name="price" id="price-input" required readonly class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
         </label>
     </fieldset>
-    <button type="submit" value="Save">Add repair</button>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-3 transition">
+        Add Repair
+    </button>
 </form>
 
 <script type="text/javascript">
