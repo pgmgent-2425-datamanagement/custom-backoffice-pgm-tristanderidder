@@ -6,7 +6,6 @@
     <?php if ($file != '.' && $file != '..'): ?>
             <div class="flex items-center justify-between gap-3 bg-gray-100 p-4 rounded-lg">
                 <img src="/images/<?= $file ?>" alt="<?= $file ?>" class="w-1/4">
-                <a href="/filmanager/delete/">Delete</a>
             </div>
 <?php endif;
 endforeach; ?>
