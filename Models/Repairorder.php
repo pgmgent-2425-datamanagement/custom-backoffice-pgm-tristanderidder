@@ -36,11 +36,11 @@ class RepairOrder extends BaseModel
         return $pdo_statement->rowCount();
     }
 
-    public function addRepair($customer_id, $device_id, $status, $problem, $technician_id, $created_on)
+    public function addRepair($customer_id, $device_id, $status, $problem, $technician_id, $image, $created_on)
     {
         $sql = "
-    INSERT INTO repairorders (customer_id, device_id, status, issueReported, technician_id, created_on) 
-    VALUES (:customer_id, :device_id, :status, :problem, :technician_id, :created_on)
+    INSERT INTO repairorders (customer_id, device_id, status, issueReported, technician_id, image, created_on) 
+    VALUES (:customer_id, :device_id, :status, :problem, :technician_id, :image, :created_on)
     ";
         $statement = $this->db->prepare($sql);
         $statement->bindParam(':customer_id', $customer_id);
@@ -48,6 +48,7 @@ class RepairOrder extends BaseModel
         $statement->bindParam(':status', $status);
         $statement->bindParam(':problem', $problem);
         $statement->bindParam(':technician_id', $technician_id);
+        $statement->bindParam(':image', $image);
         $statement->bindParam(':created_on', $created_on);
         $statement->execute();
 

@@ -34,6 +34,15 @@ class addRepairController extends BaseController
     public static function addRepair()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_FILES['image']['name'];
+            $tmp = $_FILES['image']['tmp_name'];
+
+            $to_folder = BASE_DIR . '/public/images/';
+
+            $uuid = uniqid() . '-' . $name;
+
+            move_uploaded_file($tmp, $to_folder . $uuid);
+
             // Collect customer data
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
@@ -48,11 +57,12 @@ class addRepairController extends BaseController
             $technician_id = $_POST['technician'];
             $issue = $_POST['problem'];
             $status = 'In Progress';
+            $image = $uuid;
             $created_on = date('Y-m-d H:i:s');
 
             // Add the repair order and get the repairorder_id
             $repairOrderModel = new RepairOrder();
-            $repairorder_id = $repairOrderModel->addRepair($customer_id, $device, $status, $issue, $technician_id, $created_on);
+            $repairorder_id = $repairOrderModel->addRepair($customer_id, $device, $status, $issue, $technician_id, $image, $created_on);
 
             // Add the invoice, ensuring the repairorder_id is passed
             $invoiceModel = new Invoice();

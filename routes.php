@@ -7,6 +7,8 @@ $router->get('/addRepair', 'addRepairController@index');
 $router->get('/repairs', 'RepairsController@index');
 $router->get('/parts', 'PartsController@index');
 $router->get('/addPart', 'addPartsController@index');
+$router->get('/filemanager','FilemanagerController@index');
+$router->get('/filemanager/(.*)','FilemanagerController@index');
 
 //POST Requests
 $router->post('/updateRepairOrder', 'HomeController@updateRepairOrder');

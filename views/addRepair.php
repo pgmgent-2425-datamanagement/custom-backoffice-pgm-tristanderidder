@@ -2,7 +2,7 @@
     <?php echo $title; ?>
 </h1>
 
-<form method="POST" class="bg-gray-50 border border-gray-400 p-6 rounded-lg shadow-sm space-y-6 max-w-3xl mx-auto">
+<form method="POST" enctype="multipart/form-data" class="bg-gray-50 border border-gray-400 p-6 rounded-lg shadow-sm space-y-6 max-w-3xl mx-auto">
     <!-- Customer Section -->
     <fieldset class="border border-gray-400 rounded-lg p-4">
         <legend class="text-lg font-semibold text-gray-700">Customer</legend>
@@ -71,6 +71,12 @@
                     <option value="<?php echo $technician['id']; ?>"><?php echo $technician['firstname'] . ' ' . $technician['lastname']; ?></option>
                 <?php endforeach; ?>
             </select>
+        </label>
+
+        <!-- Image -->
+        <label class="block mt-4">
+            <span class="text-gray-700 font-semibold">Image</span>
+            <input type="file" name="image" accept="image/*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
         </label>
     </fieldset>
 
