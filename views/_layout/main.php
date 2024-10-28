@@ -11,7 +11,7 @@
                                                     }; ?>">
 </head>
 
-<body class="bg-primary flex">
+<body class="bg-gray-200 flex">
     <nav class="w-max flex flex-col items-center h-screen bg-tertiary text-[#f8f8ff] py-3 px-5">
         <div class="brand">Fixit Aalst</div>
         <div class="flex-grow flex flex-col items-start justify-center gap-3 mt-auto">

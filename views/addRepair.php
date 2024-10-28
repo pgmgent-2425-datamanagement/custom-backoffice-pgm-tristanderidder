@@ -1,39 +1,39 @@
-<h1 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-6 tracking-tight text-center md:text-left">
+<h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight text-center md:text-left border-b border-gray-400 pb-2">
     <?php echo $title; ?>
 </h1>
 
-<form method="POST" class="bg-white p-6 rounded-xl shadow-md space-y-6 max-w-3xl mx-auto">
+<form method="POST" class="bg-gray-50 border border-gray-400 p-6 rounded-lg shadow-sm space-y-6 max-w-3xl mx-auto">
     <!-- Customer Section -->
-    <fieldset class="border border-gray-200 rounded-xl p-4">
+    <fieldset class="border border-gray-400 rounded-lg p-4">
         <legend class="text-lg font-semibold text-gray-700">Customer</legend>
 
         <!-- Firstname -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Firstname</span>
-            <input type="text" name="firstname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="firstname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
         </label>
 
         <!-- Lastname -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Lastname</span>
-            <input type="text" name="lastname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="lastname" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
         </label>
 
         <!-- Phone Number -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Phone number</span>
-            <input type="text" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="phone" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
         </label>
     </fieldset>
 
     <!-- Device Section -->
-    <fieldset class="border border-gray-200 rounded-xl p-4">
+    <fieldset class="border border-gray-400 rounded-lg p-4">
         <legend class="text-lg font-semibold text-gray-700">Device</legend>
 
         <!-- Brand Select -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Brand</span>
-            <select id="brand-select-device" name="brand" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <select id="brand-select-device" name="brand" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
                 <option value="">Select a brand</option>
                 <?php foreach ($devices as $device): ?>
                     <option value="<?php echo $device['brand']; ?>"><?php echo $device['brand']; ?></option>
@@ -44,7 +44,7 @@
         <!-- Model Select -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Model</span>
-            <select name="model" id="model-select-device" required disabled class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <select name="model" id="model-select-device" required disabled class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
                 <option value="">Select a model</option>
                 <?php foreach ($devices as $device): ?>
                     <option class="model-option" name="device" value="<?= $device['id']; ?>" data-brand="<?= $device['brand']; ?>"><?= $device['model']; ?></option>
@@ -54,19 +54,19 @@
     </fieldset>
 
     <!-- Repair Section -->
-    <fieldset class="border border-gray-200 rounded-xl p-4">
+    <fieldset class="border border-gray-400 rounded-lg p-4">
         <legend class="text-lg font-semibold text-gray-700">Repair</legend>
 
         <!-- Problem -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Problem</span>
-            <textarea name="problem" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+            <textarea name="problem" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500"></textarea>
         </label>
 
         <!-- Technician Select -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Technician</span>
-            <select name="technician" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <select name="technician" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
                 <?php foreach ($technicians as $technician): ?>
                     <option value="<?php echo $technician['id']; ?>"><?php echo $technician['firstname'] . ' ' . $technician['lastname']; ?></option>
                 <?php endforeach; ?>
@@ -75,18 +75,18 @@
     </fieldset>
 
     <!-- Invoice Section -->
-    <fieldset class="border border-gray-200 rounded-xl p-4">
+    <fieldset class="border border-gray-400 rounded-lg p-4">
         <legend class="text-lg font-semibold text-gray-700">Invoice</legend>
 
         <!-- Parts List -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Parts</span>
             <div id="parts-container" class="mt-2">
-                <p>Please select a brand and model to view parts.</p>
+                <p class="text-gray-600">Please select a brand and model to view parts.</p>
                 <?php foreach ($parts as $part): ?>
                     <div class="part-option" data-model-id="<?= $part['device_id']; ?>">
                         <input type="checkbox" name="parts[]" value="<?= $part['id']; ?>" class="part-checkbox" data-price="<?= $part['sellingPrice']; ?>"> <?= $part['name']; ?>
-                        <span>€<?= $part['sellingPrice']; ?></span>
+                        <span class="text-gray-600">€<?= $part['sellingPrice']; ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -95,15 +95,16 @@
         <!-- Price Input -->
         <label class="block mt-4">
             <span class="text-gray-700 font-semibold">Price</span>
-            <input type="text" name="price" id="price-input" required readonly class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <input type="text" name="price" id="price-input" required readonly class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-500 focus:ring-gray-500">
         </label>
     </fieldset>
 
     <!-- Submit Button -->
-    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl px-4 py-3 transition">
+    <button type="submit" class="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold rounded-lg px-4 py-3 transition">
         Add Repair
     </button>
 </form>
+
 
 <script type="text/javascript">
     function setupBrandModelSelection(brandSelectId, modelSelectId, modelOptionsClass, partsContainerId) {
