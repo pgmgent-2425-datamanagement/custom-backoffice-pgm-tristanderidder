@@ -138,10 +138,12 @@ class RepairOrder extends BaseModel
 
     public function getRepairsForMonth($month)
     {
-        $sql = 'SELECT DAY(created_on) as day, COUNT(*) as repair_count 
+        $sql = "
+        SELECT DAY(created_on) as day, COUNT(*) as repair_count 
             FROM repairorders 
             WHERE created_on LIKE :month 
-            GROUP BY DAY(created_on)';
+            GROUP BY DAY(created_on)
+        ";
 
         $monthLike = $month . '%'; // Example: '2024-10%'
 
