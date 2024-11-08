@@ -8,16 +8,15 @@ class RepairsController extends BaseController
 {
     public static function index()
     {
-        $month = isset($_GET['month']) ? (int)$_GET['month'] : date('m'); // Ensure it's an integer
+        $month = isset($_GET['month']) ? $_GET['month'] : date('Y-m'); // Use full 'Y-m' format
 
         $repairOrderModel = new RepairOrder();
 
-        // Get all repair orders with details
+        // Get all repair orders with details for the selected month
         $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataMonthly($month);
 
-        // Get the current month for chart data
-        $currentMonth = date('Y-m');  // Format 'YYYY-MM'
-        $repairDataForMonth = $repairOrderModel->getRepairsForMonth($currentMonth);
+        // Get repair data for the selected month for the chart
+        $repairDataForMonth = $repairOrderModel->getRepairsForMonth($month);
 
         self::loadView('/repairs', [
             'title' => 'Repairs',
