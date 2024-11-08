@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\RepairOrder;
 use App\Models\Invoice;
+use App\Models\Technician;
 
 class HomeController extends BaseController
 {
@@ -108,5 +109,34 @@ class HomeController extends BaseController
             header('Location: /');
             exit();
         }
+    }
+
+    public static function addTechnician()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
+            $role = $_POST['role'];
+            $supervisor_id = 1;
+
+            $technician = new Technician();
+            $technician->addTechnician($name, $phone, $role, $supervisor_id);
+
+            header('Location: /');
+            exit();
+        }
+    }
+
+    public static function APIgetTechnicians()
+    {
+        $part = new Technician();
+        $parts = $part->getAllTechnicians();
+        echo json_encode($parts);
+    }
+
+    public static function APIpostTechnicians()
+    {
+        $part = new Technician();
+        $part->addTechnician($_POST['firstname'], $_POST['lastname'], $_POST['role'], $_POST['supervisor_id']);
     }
 }
