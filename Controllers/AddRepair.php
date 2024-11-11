@@ -12,6 +12,10 @@ use App\Models\Parts_Repairorder;
 
 class addRepairController extends BaseController
 {
+    /**
+     * The index function retrieves all technicians, devices, and parts and loads a view for adding a
+     * repair with the retrieved data.
+     */
     public static function index()
     {
         $technician = new Technician();
@@ -31,6 +35,10 @@ class addRepairController extends BaseController
         ]);
     }
 
+    /**
+     * The function `addRepair` processes a form submission to add a repair order, customer, invoice,
+     * and selected parts to the database.
+     */
     public static function addRepair()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -43,16 +51,15 @@ class addRepairController extends BaseController
 
             move_uploaded_file($tmp, $to_folder . $uuid);
 
-            // Collect customer data
+            // Customer
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
             $phone = $_POST['phone'];
 
-            // Add customer and get the customer_id
             $customerModel = new Customer();
             $customer_id = $customerModel->addCustomer($firstname, $lastname, $phone);
 
-            // Collect other form data
+            // Repair Order
             $device = $_POST['model'];
             $technician_id = $_POST['technician'];
             $issue = $_POST['problem'];
@@ -60,21 +67,18 @@ class addRepairController extends BaseController
             $image = $uuid;
             $created_on = date('Y-m-d H:i:s');
 
-            // Add the repair order and get the repairorder_id
             $repairOrderModel = new RepairOrder();
             $repairorder_id = $repairOrderModel->addRepair($customer_id, $device, $status, $issue, $technician_id, $image, $created_on);
 
-            // Add the invoice, ensuring the repairorder_id is passed
             $invoiceModel = new Invoice();
 
-            // Collect price for the invoice
+            // Invoice
             $price = $_POST['price'];
             $invoice_id = $invoiceModel->addInvoice($price, $repairorder_id); // Pass price and repairorder_id
 
-            // Insert the selected parts into parts_repairorders
             if (isset($_POST['parts']) && !empty($_POST['parts'])) {
                 $quantity = '1'; 
-                $partRepairOrderModel = new Parts_Repairorder(); // Ensure you have this model instantiated
+                $partRepairOrderModel = new Parts_Repairorder();
 
                 foreach ($_POST['parts'] as $partId) {
                     $partRepairOrderModel->addPartsRepairorder($partId, $repairorder_id, $quantity);
