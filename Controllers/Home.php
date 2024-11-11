@@ -22,6 +22,8 @@ class HomeController extends BaseController
         // Get all repair orders with details
         $repairOrders = $repairOrderModel->getAllRepairOrdersWithDataDaily();
 
+        $invoices = $invoiceModel->invoices();
+
         // Get All Invoices
         $totalInvoices = $invoiceModel->totalInvoices();
 
@@ -37,6 +39,7 @@ class HomeController extends BaseController
             'totalRepairsToday' => $totalRepairsToday,  // All repairs for today
             'repairDataForMonth' => $repairDataForMonth,  // Data for the chart
             'repairOrders' => $repairOrders,
+            'invoices' => $invoices,
             'totalInvoices' => $totalInvoices,
             'updateStatus' => isset($_GET['status']) ? $_GET['status'] : null
         ]);
@@ -86,13 +89,14 @@ class HomeController extends BaseController
 
                 // Assume we have the RepairOrder model available
                 $repairOrderModel = new RepairOrder();
+                $deleted = $repairOrderModel->deleteRepair($repairorder_id);
 
-                // Call the update method
-                $updated = $repairOrderModel->updateStatus($repairorder_id);
+                $invoiceModel = new Invoice();
+                $deletedInvoice = $invoiceModel->deleteInvoice($repairorder_id);
 
-                if ($updated) {
+                if ($deleted && $deletedInvoice) {
                     // Redirect back with a success status
-                    header('Location: /?status=updated');
+                    header('Location: /?status=deleted');
                     exit();
                 } else {
                     // Handle the error case

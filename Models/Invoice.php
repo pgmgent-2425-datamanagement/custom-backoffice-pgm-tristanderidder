@@ -6,6 +6,15 @@ use App\Models\BaseModel;
 
 class Invoice extends BaseModel
 {
+    public function invoices()
+    {
+        $sql = 'SELECT * FROM invoices';
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->execute();
+
+        return $pdo_statement->fetchAll();
+    }
+    
     public function totalInvoices()
     {
         $sql = 'SELECT COUNT(*) as total FROM invoices WHERE DATE(created_on) = CURDATE()';
@@ -40,5 +49,14 @@ class Invoice extends BaseModel
         return $this->db->lastInsertId();
     }
 
+    public function deleteInvoice($repairorder_id)
+    {
+        $sql = "DELETE FROM invoices WHERE id = :id";
+        $pdo_statement = $this->db->prepare($sql);
+        $pdo_statement->bindParam(':id', $repairorder_id);
+        $pdo_statement->execute();
+
+        return $pdo_statement->rowCount();
+    }
 
 }

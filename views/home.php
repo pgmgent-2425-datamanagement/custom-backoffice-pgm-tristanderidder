@@ -60,7 +60,7 @@
                             </form>
                         <?php endif; ?>
                         <form action="/deleteRepairOrder" method="post">
-                            <input type="hidden" name="repairorder_id" value="<?php echo $order['repairorder_id']; ?>">
+                            <input type="hidden" name="repairorder_id" value="<?php echo $order['repairorder_id']?>">
                             <button class="bg-red-500 hover:bg-red-700 text-white rounded-xl px-4 py-2 transition">Delete</button>
                         </form>
                     </td>

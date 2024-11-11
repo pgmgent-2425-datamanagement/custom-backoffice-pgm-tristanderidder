@@ -39,7 +39,6 @@
                             <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['issueReported']); ?></td>
                             <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['status']); ?></td>
                             <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['customer_firstname'] . ' ' . $order['customer_lastname']); ?></td>
-                            <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['device_type']); ?></td>
                             <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['device_brand'] . ' ' . $order['device_model']); ?></td>
                             <td class="py-3 px-4 border-r border-gray-300"><?php echo htmlspecialchars($order['technician_firstname'] . ' ' . $order['technician_lastname']); ?></td>
                             <td class="py-3 px-4 border-r border-gray-300">€<?php echo htmlspecialchars($order['invoice_total']); ?></td>
